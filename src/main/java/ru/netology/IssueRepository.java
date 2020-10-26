@@ -1,11 +1,10 @@
-package ru.netology.repository;
+package ru.netology;
 
 import ru.netology.domain.Issue;
 import ru.netology.exceptions.NotFoundException;
 
 import java.util.ArrayList;
 import java.util.Collection;
-
 
 public class IssueRepository {
 
@@ -15,10 +14,10 @@ public class IssueRepository {
         issues.add(item);
     }
 
-    public Collection<Issue> findById(int id) {
+    public Issue findById(int id) {
         for (Issue item : issues) {
             if (item.getId() == id) {
-                return issues;
+                return item;
             }
         }
         return null;
@@ -29,29 +28,30 @@ public class IssueRepository {
     }
 
 
+    public void closedById(int id) {
 
-    public void closedById (int id) {
-        if (findById(id) == null) {
-            throw new NotFoundException("Element with id: " + id + " not found");
-        }
         if (findById(id) != null)
             for (Issue item : issues) {
                 if (item.getId() == id) {
                     item.setClosed(true);
                 }
+                if (findById(id) == null) {
+                    throw new NotFoundException("Element with id: " + id + " not found");
+                }
             }
     }
 
-    public void openById (int id) {
-        if (findById(id) == null) {
-            throw new NotFoundException("Element with id: " + id + " not found");
-        }
+    public void openById(int id) {
+
         if (findById(id) != null)
             for (Issue item : issues) {
                 if (item.getId() == id) {
                     item.setClosed(false);
                 }
-            }
 
+                if (findById(id) == null) {
+                    throw new NotFoundException("Element with id: " + id + " not found");
+                }
+            }
     }
 }
