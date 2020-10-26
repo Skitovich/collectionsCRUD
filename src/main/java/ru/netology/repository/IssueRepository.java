@@ -29,6 +29,7 @@ public class IssueRepository {
     }
 
 
+
     public void closedById (int id) {
         if (findById(id) == null) {
             throw new NotFoundException("Element with id: " + id + " not found");
@@ -41,7 +42,7 @@ public class IssueRepository {
             }
     }
 
-    public void openById(int id) {
+    public void openById (int id) {
         if (findById(id) == null) {
             throw new NotFoundException("Element with id: " + id + " not found");
         }
