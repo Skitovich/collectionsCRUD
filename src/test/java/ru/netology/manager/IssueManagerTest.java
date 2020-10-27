@@ -2,7 +2,7 @@ package ru.netology.manager;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ru.netology.IssueRepository;
+import ru.netology.repository.IssueRepository;
 import ru.netology.domain.Issue;
 
 import java.util.*;
@@ -60,19 +60,19 @@ class IssueManagerTest {
 
     @Test
     public void shouldFilterByLabel() {
-        Set<String> tag = new HashSet<>(Arrays.asList("Rus"));
-        Predicate<Set> equalLabel = t -> t.equals(tag);
+        Set<String> tag = new HashSet<>(Collections.singletonList("Rus"));
+        Predicate<Set> Tag = t -> t.equals(tag);
         Collection<Issue> expected = List.of(first);
-        Collection<Issue> actual = manager.filterByTags(equalLabel);
+        Collection<Issue> actual = manager.filterByTags(Tag);
         assertEquals(expected, actual);
     }
 
     @Test
     public void shouldFilterByAssignee() {
-        Set<String> assignee = new HashSet<>(Arrays.asList("Update"));
-        Predicate<Set> equalAssignee = t -> t.equals(assignee);
+        Set<String> assignee = new HashSet<>(Collections.singletonList("Update"));
+        Predicate<Set> Assignee = t -> t.equals(assignee);
         Collection<Issue> expected = List.of(second);
-        Collection<Issue> actual = manager.filterByAssignees(equalAssignee);
+        Collection<Issue> actual = manager.filterByAssignees(Assignee);
         assertEquals(expected, actual);
     }
 

@@ -1,4 +1,4 @@
-package ru.netology;
+package ru.netology.repository;
 
 import ru.netology.domain.Issue;
 import ru.netology.exceptions.NotFoundException;

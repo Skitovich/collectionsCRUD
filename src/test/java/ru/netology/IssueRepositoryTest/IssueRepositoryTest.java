@@ -1,7 +1,8 @@
-package ru.netology;
+package ru.netology.IssueRepositoryTest;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import ru.netology.repository.IssueRepository;
 import ru.netology.domain.Issue;
 
 import java.util.Arrays;

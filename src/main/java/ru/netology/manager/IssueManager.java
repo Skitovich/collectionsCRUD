@@ -1,6 +1,6 @@
 package ru.netology.manager;
 
-import ru.netology.IssueRepository;
+import ru.netology.repository.IssueRepository;
 import ru.netology.domain.Issue;
 
 import java.util.ArrayList;
