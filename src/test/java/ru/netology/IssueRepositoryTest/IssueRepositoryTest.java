@@ -2,10 +2,10 @@ package ru.netology.IssueRepositoryTest;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ru.netology.repository.IssueRepository;
 import ru.netology.domain.Issue;
+import ru.netology.repository.IssueRepository;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -14,9 +14,9 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 class IssueRepositoryTest {
 
     IssueRepository repository = new IssueRepository();
-    Issue first = new Issue(1, "Ruslan", new HashSet<String>(Arrays.asList("Bug")), new HashSet<String>(Arrays.asList("Rus")), true);
-    Issue second = new Issue(2, "Dmitriy", new HashSet<String>(Arrays.asList("Update")), new HashSet<String>(Arrays.asList("Dmitriy")), false);
-    Issue third = new Issue(3, "Maksim", new HashSet<String>(Arrays.asList("NewFicha")), new HashSet<String>(Arrays.asList("Maksim")), true);
+    Issue first = new Issue(1, "Ruslan", new HashSet<>(Collections.singletonList("Bug")), new HashSet<>(Collections.singletonList("Rus")), true);
+    Issue second = new Issue(2, "Dmitriy", new HashSet<>(Collections.singletonList("Update")), new HashSet<>(Collections.singletonList("Dmitriy")), false);
+    Issue third = new Issue(3, "Maksim", new HashSet<>(Collections.singletonList("NewFiche")), new HashSet<>(Collections.singletonList("Maksim")), true);
 
     @BeforeEach
     void setUp() {
@@ -37,6 +37,5 @@ class IssueRepositoryTest {
     public void shouldNotFindByID() {
         assertNull(repository.findById(4));
     }
-
 
 }

@@ -2,8 +2,8 @@ package ru.netology.manager;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ru.netology.repository.IssueRepository;
 import ru.netology.domain.Issue;
+import ru.netology.repository.IssueRepository;
 
 import java.util.*;
 import java.util.function.Predicate;
@@ -14,9 +14,9 @@ class IssueManagerTest {
     IssueRepository repository = new IssueRepository();
     IssueManager manager = new IssueManager(repository);
 
-    Issue first = new Issue(1, "Ruslan", new HashSet<String>(Arrays.asList("Bug")), new HashSet<String>(Arrays.asList("Rus")), true);
-    Issue second = new Issue(2, "Dmitriy", new HashSet<String>(Arrays.asList("Update")), new HashSet<String>(Arrays.asList("Dmitriy")), false);
-    Issue third = new Issue(3, "Maksim", new HashSet<String>(Arrays.asList("NewFicha")), new HashSet<String>(Arrays.asList("Maksim")), true);
+    Issue first = new Issue(1, "Ruslan", new HashSet<>(Collections.singletonList("Bug")), new HashSet<>(Collections.singletonList("Rus")), true);
+    Issue second = new Issue(2, "Dmitriy", new HashSet<>(Collections.singletonList("Update")), new HashSet<>(Collections.singletonList("Dmitriy")), false);
+    Issue third = new Issue(3, "Maksim", new HashSet<>(Collections.singletonList("NewFiche")), new HashSet<>(Collections.singletonList("Maksim")), true);
 
     @BeforeEach
     void setUp() {
@@ -28,7 +28,7 @@ class IssueManagerTest {
 
     @Test
     public void shouldAddOne() {
-        Issue fourth = new Issue(4, "Sergey", new HashSet<String>(Collections.singletonList("Bug")), new HashSet<String>(Collections.singletonList("Sergey")), true);
+        Issue fourth = new Issue(4, "Sergey", new HashSet<>(Collections.singletonList("Bug")), new HashSet<>(Collections.singletonList("Sergey")), true);
         manager.add(fourth);
         Collection<Issue> expected = List.of(first, second, third, fourth);
         Collection<Issue> actual = repository.findAll();
@@ -61,18 +61,18 @@ class IssueManagerTest {
     @Test
     public void shouldFilterByLabel() {
         Set<String> tag = new HashSet<>(Collections.singletonList("Rus"));
-        Predicate<Set> Tag = t -> t.equals(tag);
+        Predicate<Set<String>> equalTag = t -> t.equals(tag);
         Collection<Issue> expected = List.of(first);
-        Collection<Issue> actual = manager.filterByTags(Tag);
+        Collection<Issue> actual = manager.filterByTags(equalTag);
         assertEquals(expected, actual);
     }
 
     @Test
     public void shouldFilterByAssignee() {
         Set<String> assignee = new HashSet<>(Collections.singletonList("Update"));
-        Predicate<Set> Assignee = t -> t.equals(assignee);
+        Predicate<Set<String>> equalAssignee = t -> t.equals(assignee);
         Collection<Issue> expected = List.of(second);
-        Collection<Issue> actual = manager.filterByAssignees(Assignee);
+        Collection<Issue> actual = manager.filterByAssignees(equalAssignee);
         assertEquals(expected, actual);
     }
 
@@ -94,7 +94,7 @@ class IssueManagerTest {
 
     @Test
     public void shouldViewCloseIssue() {
-        manager.closedById(1);
+        repository.closedById(1);
         Collection<Issue> expected = List.of(first, third);
         Collection<Issue> actual = manager.showClosedIssues();
         assertEquals(expected, actual);
@@ -110,7 +110,7 @@ class IssueManagerTest {
 
     @Test
     public void shouldNotCloseIssue() {
-        manager.closedById(4);
+        manager.closeById(4);
         Collection<Issue> expected = List.of(first, third);
         Collection<Issue> actual = manager.showClosedIssues();
         assertEquals(expected, actual);

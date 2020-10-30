@@ -27,7 +27,6 @@ public class IssueRepository {
         return issues;
     }
 
-
     public void closedById(int id) {
 
         if (findById(id) != null)
@@ -35,10 +34,9 @@ public class IssueRepository {
                 if (item.getId() == id) {
                     item.setClosed(true);
                 }
-                if (findById(id) == null) {
-                    throw new NotFoundException("Element with id: " + id + " not found");
-                }
+
             }
+        else throw new NotFoundException("Element with id: " + id + " not found");
     }
 
     public void openById(int id) {
@@ -48,10 +46,9 @@ public class IssueRepository {
                 if (item.getId() == id) {
                     item.setClosed(false);
                 }
-
-                if (findById(id) == null) {
-                    throw new NotFoundException("Element with id: " + id + " not found");
-                }
             }
+
+        else throw new NotFoundException("Element with id: " + id + " not found");
+
     }
 }

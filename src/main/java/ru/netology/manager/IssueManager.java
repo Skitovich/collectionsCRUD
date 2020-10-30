@@ -1,7 +1,8 @@
 package ru.netology.manager;
 
-import ru.netology.repository.IssueRepository;
 import ru.netology.domain.Issue;
+import ru.netology.exceptions.NotFoundException;
+import ru.netology.repository.IssueRepository;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -12,7 +13,6 @@ import java.util.function.Predicate;
 public class IssueManager {
 
     private IssueRepository repository;
-    private Predicate<Set> predicate;
 
     public IssueManager(IssueRepository repository) {
         this.repository = repository;
@@ -25,16 +25,6 @@ public class IssueManager {
     public void add(Issue item) {
         repository.save(item);
     }
-
-
-    public void closedById(int id) {
-        repository.closedById(id);
-    }
-
-    public void openById(int id) {
-        repository.openById(id);
-    }
-
 
     public Collection<Issue> showOpenIssues() {
         Collection<Issue> openedIssues = new ArrayList<>();
@@ -67,7 +57,7 @@ public class IssueManager {
     }
 
 
-    public Collection<Issue> filterByTags(Predicate<Set> predicate) {
+    public Collection<Issue> filterByTags(Predicate<Set<String>> predicate) {
         Collection<Issue> tags = new ArrayList<>();
         for (Issue item : repository.findAll()) {
             if (predicate.test(item.getTags())) {
@@ -77,7 +67,7 @@ public class IssueManager {
         return tags;
     }
 
-    public Collection<Issue> filterByAssignees(Predicate<Set> predicate) {
+    public Collection<Issue> filterByAssignees(Predicate<Set<String>> predicate) {
         Collection<Issue> assignees = new ArrayList<>();
         for (Issue item : repository.findAll()) {
             if (predicate.test(item.getAssignees())) {
@@ -92,6 +82,23 @@ public class IssueManager {
         ArrayList<Issue> result = new ArrayList<>(repository.findAll());
         result.sort(comparator);
         return result;
+    }
+
+    public void closeById(int id) {
+        try {
+            repository.closedById(id);
+        } catch (NotFoundException e) {
+            e.getMessage("Hello, Im NotFoundException, from test 'shouldNotCloseIssue'");
+        }
+    }
+
+    public void openById(int id) {
+        try {
+            repository.openById(id);
+
+        } catch (NotFoundException e) {
+            e.getMessage("Hello, Im NotFoundException, from test 'shouldNotOpenIssue'");
+        }
     }
 
 
