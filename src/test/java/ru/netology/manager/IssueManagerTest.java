@@ -14,21 +14,25 @@ class IssueManagerTest {
     IssueRepository repository = new IssueRepository();
     IssueManager manager = new IssueManager(repository);
 
-    Issue first = new Issue(1, "Ruslan", new HashSet<>(Collections.singletonList("Bug")), new HashSet<>(Collections.singletonList("Rus")), true);
-    Issue second = new Issue(2, "Dmitriy", new HashSet<>(Collections.singletonList("Update")), new HashSet<>(Collections.singletonList("Dmitriy")), false);
-    Issue third = new Issue(3, "Maksim", new HashSet<>(Collections.singletonList("NewFiche")), new HashSet<>(Collections.singletonList("Maksim")), true);
+    Issue first = new Issue(1, "Ruslan", new HashSet<>(Collections.singletonList("Bug")),
+            new HashSet<>(Collections.singletonList("Rus")), true);
+    Issue second = new Issue(2, "Dmitriy", new HashSet<>(Collections.singletonList("Update")),
+            new HashSet<>(Collections.singletonList("Dmitriy")), false);
+    Issue third = new Issue(3, "Maksim", new HashSet<>(Collections.singletonList("NewFiche")),
+            new HashSet<>(Collections.singletonList("Maksim")), true);
 
     @BeforeEach
     void setUp() {
         repository.save(first);
         repository.save(second);
         repository.save(third);
-        repository.findAll();
+        manager.findAll();
     }
 
     @Test
     public void shouldAddOne() {
-        Issue fourth = new Issue(4, "Sergey", new HashSet<>(Collections.singletonList("Bug")), new HashSet<>(Collections.singletonList("Sergey")), true);
+        Issue fourth = new Issue(4, "Sergey", new HashSet<>(Collections.singletonList("Bug")),
+                new HashSet<>(Collections.singletonList("Sergey")), true);
         manager.add(fourth);
         Collection<Issue> expected = List.of(first, second, third, fourth);
         Collection<Issue> actual = repository.findAll();

@@ -12,7 +12,7 @@ import java.util.function.Predicate;
 
 public class IssueManager {
 
-    private IssueRepository repository;
+    private final IssueRepository repository;
 
     public IssueManager(IssueRepository repository) {
         this.repository = repository;
@@ -56,7 +56,6 @@ public class IssueManager {
         return authors;
     }
 
-
     public Collection<Issue> filterByTags(Predicate<Set<String>> predicate) {
         Collection<Issue> tags = new ArrayList<>();
         for (Issue item : repository.findAll()) {
@@ -77,7 +76,6 @@ public class IssueManager {
         return assignees;
     }
 
-
     public Collection<Issue> sortById(Comparator<Issue> comparator) {
         ArrayList<Issue> result = new ArrayList<>(repository.findAll());
         result.sort(comparator);
@@ -95,7 +93,6 @@ public class IssueManager {
     public void openById(int id) {
         try {
             repository.openById(id);
-
         } catch (NotFoundException e) {
             e.getMessage("Hello, Im NotFoundException, from test 'shouldNotOpenIssue'");
         }
